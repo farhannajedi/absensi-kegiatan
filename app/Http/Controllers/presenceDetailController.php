@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Presence;
 use App\Models\PresenceDetail;
 use Illuminate\Http\Request;
 

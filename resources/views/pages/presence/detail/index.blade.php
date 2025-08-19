@@ -65,9 +65,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if ($presences->isEmpty())
+                    @if ($presenceDetails->isEmpty())
                     <tr>
-                        <td colspan="5" class="text-center">Belum Ada Tamu Yang Tiba!</td>
+                        <td colspan="5" class="text-center">Belum Ada Tamu Yang Mengisi Absen!</td>
                     </tr>
                     @endif
                     @foreach ($presenceDetails as $detail)

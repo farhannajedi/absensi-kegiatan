@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PresenceController;
+use App\Http\Controllers\PresenceDetailController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
