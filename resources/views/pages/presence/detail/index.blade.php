@@ -53,6 +53,45 @@
                     <td>{{date('H:i', strtotime($presence->tgl_kegiatan))}}</td>
                 </tr>
             </table>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Nama</th>
+                        <th>Jabatan</th>
+                        <th>Asal Instansi</th>
+                        <th>Tanda Tangan</th>
+                        <th>opsi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if ($presences->isEmpty())
+                    <tr>
+                        <td colspan="5" class="text-center">Belum Ada Tamu Yang Tiba!</td>
+                    </tr>
+                    @endif
+                    @foreach ($presenceDetails as $detail)
+                    <tr>
+                        <td>{{$loop->iteration}}</td>
+                        <td>{{$detail->nama}}</td>
+                        <td>{{$detail->jabatan}}</td>
+                        <td>{{$detail->asal_instansi}}</td>
+                        <td>{{$detail->tanda_tangan}}</td>
+                        <td>
+                            <form action="{{route('presence-detail.destroy', $presence->id)}}" method="post"
+                                class="d-inline">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" class="btn btn-danger"
+                                    onclick="return confirm('Apakah Anda Yakin Ingin Mneghapus Data ini?')">
+                                    Hapus
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
