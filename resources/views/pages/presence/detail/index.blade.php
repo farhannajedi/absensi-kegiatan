@@ -36,21 +36,21 @@
             </div>
         </div>
         <div class="card-body">
-            <table>
+            <table class="table table-borderless">
                 <tr>
-                    <td>Tujuan Kegiatan</td>
-                    <td>:</td>
+                    <td width="150">Tujuan Kegiatan</td>
+                    <td width="20">:</td>
                     <td>{{$presence->tujuan_kegiatan}}</td>
                 </tr>
                 <tr>
                     <td>Tanggal Kegiatan</td>
                     <td>:</td>
-                    <td></td>
+                    <td>{{date('d F Y', strtotime($presence->tgl_kegiatan))}}</td>
                 </tr>
                 <tr>
                     <td>Waktu Kegiatan</td>
                     <td>:</td>
-                    <td></td>
+                    <td>{{date('H:i', strtotime($presence->tgl_kegiatan))}}</td>
                 </tr>
             </table>
         </div>
