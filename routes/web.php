@@ -8,3 +8,4 @@ Route::get('/', function () {
 })->name('home');
 
 Route::resource('presence', PresenceController::class);
+Route::delete('presence-detail/{id}', [PresenceDetailController::class, 'destroy'])->name('presence-detail.destroy');
