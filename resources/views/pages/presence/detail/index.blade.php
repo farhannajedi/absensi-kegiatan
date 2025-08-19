@@ -11,14 +11,14 @@
                     </h4>
                 </div>
                 <div class="col text-end">
-                    <a href="#" class="btn btn-warning">
+                    <button type="button" onClick="salintautan()" class="btn btn-warning">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-clipboard-fill" viewBox="0 0 16 16">
                             <path fill-rule="evenodd"
                                 d="M10 1.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5zm-5 0A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5v1A1.5 1.5 0 0 1 9.5 4h-3A1.5 1.5 0 0 1 5 2.5zm-2 0h1v1A2.5 2.5 0 0 0 6.5 5h3A2.5 2.5 0 0 0 12 2.5v-1h1a2 2 0 0 1 2 2V14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3.5a2 2 0 0 1 2-2" />
                         </svg>
                         Salin Tautan
-                    </a>
+                    </button>
                     <a href="#" class="btn btn-danger">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-file-earmark-pdf-fill" viewBox="0 0 16 16">
@@ -67,7 +67,7 @@
                 <tbody>
                     @if ($presenceDetails->isEmpty())
                     <tr>
-                        <td colspan="5" class="text-center">Belum Ada Tamu Yang Mengisi Absen!</td>
+                        <td colspan="6" class="text-center">Belum Ada Tamu Yang Mengisi Absen!</td>
                     </tr>
                     @endif
                     @foreach ($presenceDetails as $detail)
@@ -96,3 +96,6 @@
     </div>
 </div>
 @endsection
+
+@push('js')
+@endpush
