@@ -11,7 +11,7 @@
                     </h4>
                 </div>
                 <div class="col text-end">
-                    <button type="button" onClick="salintautan()" class="btn btn-warning">
+                    <button type="button" onClick="salinTautan()" class="btn btn-warning">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-clipboard-fill" viewBox="0 0 16 16">
                             <path fill-rule="evenodd"
@@ -98,4 +98,11 @@
 @endsection
 
 @push('js')
+<!-- script untuk clipboard url absensi -->
+<script>
+function salinTautan() {
+    navigator.clipboard.writeText("{{route('absen.index', $presence->slug)}}")
+    alert('berhasil');
+}
+</script>
 @endpush
