@@ -42,7 +42,7 @@
                         <h5 class="card-title">Form Absensi</h5>
                     </div>
                     <div class="card-body">
-                        <form action="{{route('absen.save')}}">
+                        <form id="form-absen" action="{{route('absen.save', $presence->id)}}" method="post">
                             @csrf
                             <div class="mb-3">
                                 <label for="nama">Nama</label>
@@ -50,6 +50,38 @@
                                 @error('nama')
                                 <div class="text-danger small">{{$message}}</div>
                                 @enderror
+                            </div>
+                            <div class="mb-3">
+                                <label for="jabatan">Jabatan</label>
+                                <input type="text" class="form-control" id="jabatan" name="jabatan">
+                                @error('jabatan')
+                                <div class="text-danger small">{{$message}}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-3">
+                                <label for="asal_instansi">Asal Instansi</label>
+                                <input type="text" class="form-control" id="asal_instansi" name="asal_instansi">
+                                @error('asal_instansi')
+                                <div class="text-danger small">{{$message}}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-3">
+                                <label for="tanda_tangan">Tanda Tangan</label>
+                                <div class="d-block form-control mb-2">
+                                    <canvas id="signature-pad" class="signature-pad"></canvas>
+                                </div>
+                                <textarea name="signature" id="signature64" class="d-none"></textarea>
+                                @error('signature')
+                                <div class="text-danger small">{{$message}}</div>
+                                @enderror
+                                <button type="button" id="clear" class="btn btn-sm btn-secondary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-archive-fill" viewBox="0 0 16 16">
+                                        <path
+                                            d="M12.643 15C13.979 15 15 13.845 15 12.5V5H1v7.5C1 13.845 2.021 15 3.357 15zM5.5 7h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1M.8 1a.8.8 0 0 0-.8.8V3a.8.8 0 0 0 .8.8h14.4A.8.8 0 0 0 16 3V1.8a.8.8 0 0 0-.8-.8z" />
+                                    </svg>
+                                    Clear
+                                </button>
                             </div>
                             <button type="submit" class="btn btn-primary">simpan</button>
                         </form>
@@ -70,6 +102,44 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous">
+    </script>
+    <!-- jquery cdn library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- asset js for signature -->
+    <script src="{{asset('js/signature.min.js')}}"></script>
+
+    <!-- fungsi javascript signature -->
+    <script>
+    $(function() {
+        // set signature pad
+        let sig = $('#signature-pad').parent().width();
+        $('#signature-pad').attr('width', sig);
+
+        // set canvas color
+        let signaturePad = new SignaturePad(document.getElementById('signature-pad'), {
+            backgroundColor: 'rgb(255, 255, 255, 0)',
+            penColor: 'rgb(0, 0, 0)',
+        });
+
+        // fill signature to textarea
+        $('canvas').on('mouseup touchend', function() {
+            $('#signature64').val(signaturePad.toDataURL());
+        });
+
+        // clear signature
+        $('#clear').on('click', function(e) {
+            e.preventDefault();
+            signaturePad.clear();
+            $('#signature64').val('');
+        });
+
+        // submit form
+        $('#form-absen').on('submit', function() {
+            $(this).find('button[type="submit"]').attr('disabled', 'disabled');
+        });
+    });
     </script>
 </body>
 

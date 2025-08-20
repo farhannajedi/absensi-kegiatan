@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Presence;
+use App\Models\PresenceDetail;
+use Illuminate\Support\Facades\Storage;
+
 use Illuminate\Http\Request;
 
 class AbsenController extends Controller
@@ -13,12 +16,37 @@ class AbsenController extends Controller
         return view('pages.absen.index', compact('presence'));
     }
 
-    public function save(Request $request)
+    public function save(Request $request, string $id)
     {
+        $presence = Presence::findOrFail($id);
         $request->validate([
-            'name' => 'required',
+            'nama' => 'required',
+            'jabatan' => 'required',
+            'asal_instansi' => 'required',
+            'signature' => 'required',
         ]);
 
-        $presence
+        $presenceDetail = new PresenceDetail();
+        $presenceDetail->presence_id = $presence->id;
+        $presenceDetail->nama = $request->nama;
+        $presenceDetail->jabatan = $request->jabatan;
+        $presenceDetail->asal_instansi = $request->asal_instansi;
+
+        // decode base64 gambarnya
+        $base64_image = $request->signature;
+        @list($type, $file_data) = explode(';', $base64_image); 
+        @list(, $file_data) = explode(',', $file_data);
+
+        // generate nama file
+        $uniqChar = date('YmdHis').uniqid();
+        $signature = "tanda-tangan/{$uniqChar}.png";
+
+        // simpan gambar ke public
+        Storage::disk('public_uploads')->put($signature,base64_decode($file_data));
+
+        $presenceDetail->tanda_tangan = $signature;
+        $presenceDetail->save();
+
+        return redirect()->back();
     }
 }
