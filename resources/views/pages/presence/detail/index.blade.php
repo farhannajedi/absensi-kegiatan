@@ -19,7 +19,7 @@
                         </svg>
                         Salin Tautan
                     </button>
-                    <a href="#" class="btn btn-danger">
+                    <a href="{{route('presence-detail.export-pdf', $presence->id)}}" class="btn btn-danger">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-file-earmark-pdf-fill" viewBox="0 0 16 16">
                             <path
@@ -57,6 +57,7 @@
                 <thead>
                     <tr>
                         <th>No.</th>
+                        <th>Tanggal</th>
                         <th>Nama</th>
                         <th>Jabatan</th>
                         <th>Asal Instansi</th>
@@ -67,12 +68,13 @@
                 <tbody>
                     @if ($presenceDetails->isEmpty())
                     <tr>
-                        <td colspan="6" class="text-center">Belum Ada Tamu Yang Mengisi Absen!</td>
+                        <td colspan="7" class="text-center">Belum Ada Tamu Yang Mengisi Absen!</td>
                     </tr>
                     @endif
                     @foreach ($presenceDetails as $detail)
                     <tr>
                         <td>{{$loop->iteration}}</td>
+                        <td>{{date('d/m/Y H:i', strtotime($presence->created_at))}}</td>
                         <td>{{$detail->nama}}</td>
                         <td>{{$detail->jabatan}}</td>
                         <td>{{$detail->asal_instansi}}</td>
