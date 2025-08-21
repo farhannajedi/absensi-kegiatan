@@ -7,13 +7,16 @@ use App\Models\PresenceDetail;
 use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\List_;
 
 class AbsenController extends Controller
 {
     public function index($slug)
     {
         $presence = Presence::where('slug', $slug)->first();
-        return view('pages.absen.index', compact('presence'));
+        // menambah list tamu yang telah mengisi absensi
+        $presenceDetails = PresenceDetail::where('presence_id', $presence->id)->get();
+        return view('pages.absen.index', compact('presence', 'presenceDetails'));
     }
 
     public function save(Request $request, string $id)

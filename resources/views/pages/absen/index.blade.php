@@ -36,7 +36,7 @@
         </div>
         <div class="row">
             <!--untuk mengatur ukuran lebar form-->
-            <div class="col-md-5">
+            <div class="col-md-3">
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title">Form Absensi</h5>
@@ -94,6 +94,38 @@
                         <h5 class="card-title">Daftar Kehadiran</h5>
                     </div>
                     <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Nama</th>
+                                    <th>Jabatan</th>
+                                    <th>Asal Instansi</th>
+                                    <th>Tanda Tangan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if ($presenceDetails->isEmpty())
+                                <tr>
+                                    <td colspan="5" class="text-center">Belum Ada Tamu Yang Mengisi Absen!</td>
+                                </tr>
+                                @endif
+                                @foreach ($presenceDetails as $detail)
+                                <tr>
+                                    <td>{{$loop->iteration}}</td>
+                                    <td>{{$detail->nama}}</td>
+                                    <td>{{$detail->jabatan}}</td>
+                                    <td>{{$detail->asal_instansi}}</td>
+                                    <td>
+                                        @if ($detail->tanda_tangan)
+                                        <img src="{{asset('uploads/' . $detail->tanda_tangan)}}" alt="Tanda Tangan"
+                                            width="100">
+                                        @endif
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

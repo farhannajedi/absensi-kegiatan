@@ -76,9 +76,13 @@
                         <td>{{$detail->nama}}</td>
                         <td>{{$detail->jabatan}}</td>
                         <td>{{$detail->asal_instansi}}</td>
-                        <td>{{$detail->tanda_tangan}}</td>
                         <td>
-                            <form action="{{route('presence-detail.destroy', $presence->id)}}" method="post"
+                            @if ($detail->tanda_tangan)
+                            <img src="{{asset('uploads/' . $detail->tanda_tangan)}}" alt="Tanda Tangan" width="100">
+                            @endif
+                        </td>
+                        <td>
+                            <form action="{{route('presence-detail.destroy', $detail->id)}}" method="post"
                                 class="d-inline">
                                 @csrf
                                 @method('delete')
