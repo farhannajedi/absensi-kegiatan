@@ -18,49 +18,42 @@
             </div>
         </div>
         <div class="card-body">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>No.</th>
-                        <th>Tujuan Kegiatan</th>
-                        <th>Tanggal Kegiatan</th>
-                        <th>Waktu Mulai</th>
-                        <th>opsi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if ($presences->isEmpty())
-                    <tr>
-                        <td colspan="5" class="text-center">Belum Ada Tamu Yang Tiba!</td>
-                    </tr>
-                    @endif
-                    @foreach ($presences as $presence)
-                    <tr>
-                        <td>{{$loop->iteration}}</td>
-                        <td>{{$presence->tujuan_kegiatan}}</td>
-                        <td>{{ date('d-m-Y', strtotime($presence->tgl_kegiatan)) }}</td>
-                        <td>{{ date('H:i', strtotime($presence->tgl_kegiatan)) }}</td>
-                        <td>
-                            <a href="{{route('presence.show', $presence->id)}}" class="btn btn-secondary">
-                                Detail
-                            </a>
-                            <a href="{{route('presence.edit', $presence->id)}}" class="btn btn-warning">
-                                Edit
-                            </a>
-                            <form action="{{route('presence.destroy', $presence->id)}}" method="post" class="d-inline">
-                                @csrf
-                                @method('delete')
-                                <button type="submit" class="btn btn-danger"
-                                    onclick="return confirm('Apakah Anda Yakin Ingin Mneghapus Data ini?')">
-                                    Hapus
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            <!-- di notpad -->
+            <!-- diganti ini dari yajra laravel-->
+            {{ $dataTable->table() }}
         </div>
     </div>
 </div>
 @endsection
+
+<!-- function untuk datatables -->
+@push('js')
+{{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+<script>
+$(document).ready(function() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+});
+
+$(document).on('click', 'btn-delete', function(e) {
+    e.preventDefault();
+    let url = $(this).attr('href');
+
+    if (confirm('apakah anda yakin ingin menghapus data ini?')) {
+        $.ajax({
+            type: 'DELETE',
+            url: url,
+            success: function(data) {
+                window.location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        })
+    }
+})
+</script>
+@endpush
