@@ -7,6 +7,8 @@
     <title>{{ env('APP_NAME') }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <!-- css datatable -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.3/css/dataTables.bootstrap5.css">
 </head>
 
 <body>
@@ -94,40 +96,7 @@
                         <h5 class="card-title">Daftar Kehadiran</h5>
                     </div>
                     <div class="card-body">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>Tanggal</th>
-                                    <th>Nama</th>
-                                    <th>Jabatan</th>
-                                    <th>Asal Instansi</th>
-                                    <th>Tanda Tangan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if ($presenceDetails->isEmpty())
-                                <tr>
-                                    <td colspan="5" class="text-center">Belum Ada Tamu Yang Mengisi Absen!</td>
-                                </tr>
-                                @endif
-                                @foreach ($presenceDetails as $detail)
-                                <tr>
-                                    <td>{{$loop->iteration}}</td>
-                                    <td>{{date('d/m/Y H:i', strtotime($presence->created_at))}}</td>
-                                    <td>{{$detail->nama}}</td>
-                                    <td>{{$detail->jabatan}}</td>
-                                    <td>{{$detail->asal_instansi}}</td>
-                                    <td>
-                                        @if ($detail->tanda_tangan)
-                                        <img src="{{asset('uploads/' . $detail->tanda_tangan)}}" alt="Tanda Tangan"
-                                            width="100">
-                                        @endif
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        {{ $dataTable->table() }}
                     </div>
                 </div>
             </div>
@@ -141,8 +110,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <!-- asset js for signature -->
     <script src="{{asset('js/signature.min.js')}}"></script>
+
+    <script src="https://cdn.datatables.net/2.3.3/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.3.3/js/dataTables.bootstrap5.js"></script>
 
     <!-- fungsi javascript signature -->
     <script>
@@ -175,6 +148,10 @@
         });
     });
     </script>
+
+    <!-- kontent delete -->
+
+    {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
 </body>
 
 </html>

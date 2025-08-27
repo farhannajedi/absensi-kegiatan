@@ -19,7 +19,7 @@
         </div>
         <div class="card-body">
             <!-- di notpad -->
-            <!-- diganti ini dari yajra laravel-->
+            <!-- diganti ini dari yajra laravel di datatable presence datatable-->
             {{ $dataTable->table() }}
         </div>
     </div>
@@ -38,7 +38,7 @@ $(document).ready(function() {
     });
 });
 
-$(document).on('click', 'btn-delete', function(e) {
+$(document).on('click', '.btn-delete', function(e) {
     e.preventDefault();
     let url = $(this).attr('href');
 

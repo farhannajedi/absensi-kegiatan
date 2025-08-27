@@ -35,6 +35,6 @@ class presenceDetailController extends Controller
 
         $presenceDetail->delete();
         
-        return redirect()->back();
+        return response()->json(['status' => 'success', 'message' => 'Data Berhasil Dihapus']);
     }
 }

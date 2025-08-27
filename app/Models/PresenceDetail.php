@@ -13,4 +13,10 @@ class PresenceDetail extends Model
     'asal_instansi',
     'tanda_tangan'
     ];
+
+    // kolom relasi ke presence
+    public function presence()
+    {
+        return $this->belongsTo(Presence::class);
+    }
 }

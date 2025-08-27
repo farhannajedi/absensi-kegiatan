@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\PresenceDetail;
 use App\DataTables\PresencesDataTable;
+use App\DataTables\PresenceDetailsDataTable;
 use Illuminate\Support\Facades\Storage;
 
 class PresenceController extends Controller
@@ -51,11 +52,10 @@ class PresenceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id, PresenceDetailsDataTable $dataTable)
     {
         $presence = Presence::findOrFail($id);
-        $presenceDetails = PresenceDetail::where('presence_id', $id)->get();
-        return view('pages.presence.detail.index', compact('presence', 'presenceDetails'));
+        return $dataTable->render('pages.presence.detail.index', compact('presence'));
     }
 
     /**
@@ -96,7 +96,7 @@ class PresenceController extends Controller
         // delete detail absensi
         $presenceDetail = PresenceDetail::where('presence_id', $id)->get();
         foreach ($presenceDetail as $pd) {
-            if ($pd->tanda_tangan) {
+            if ($pd->tanda_tangan && Storage::disk('public_uploads')->exists($pd->tanda_tangan)) {
                 Storage::disk('public_uploads')->delete($pd->tanda_tangan);
             }
             $pd->delete();
